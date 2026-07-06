@@ -426,7 +426,7 @@ export default function AddChildFlow({ onComplete, onCancel, asModal, initialSte
         <div className={cn(
           "w-full overflow-hidden relative",
           step === 'done'
-            ? "max-w-2xl bg-transparent shadow-none flex flex-col md:flex-row"
+            ? "max-w-4xl bg-transparent shadow-none flex flex-col md:flex-row"
             : "max-w-4xl bg-white rounded-tr-[36px] shadow-premium flex flex-col md:flex-row min-h-[640px]"
         )}>
           {step !== 'done' && !isDirectSessionModal && (

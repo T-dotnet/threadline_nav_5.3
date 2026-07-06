@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Button } from "../ui/Button";
 
@@ -43,8 +43,7 @@ export function SetupCompleteStep({
       <div className="w-full bg-white rounded-tr-[36px] border border-black/5 shadow-premium p-8 sm:p-12 md:p-14 flex flex-col justify-between gap-10 min-h-[580px]">
         <div className="space-y-8 sm:space-y-10">
           <div className="space-y-5">
-            <div className="inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-thread-mid-green)]">
-              <Sparkles className="w-4 h-4" />
+            <div className="inline-flex items-center text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-thread-mid-green)]">
               First picture complete
             </div>
             <h1 className={cn(stepHeadingClass, "max-w-[18ch]")}>
@@ -54,12 +53,6 @@ export function SetupCompleteStep({
           </div>
 
           <div className="bg-[var(--color-thread-off-white)]/70 p-6 sm:p-8 rounded-tr-[24px] space-y-6">
-            <div className="flex items-center justify-between gap-4">
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[var(--color-thread-dark-slate)]/60">
-                First picture
-              </p>
-              <div className="h-px flex-1 bg-black/5" />
-            </div>
             <div className="space-y-5">
               {summaryItems.map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
