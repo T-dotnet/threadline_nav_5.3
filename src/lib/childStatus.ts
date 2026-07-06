@@ -131,6 +131,10 @@ export function usesAssessmentCard(child: Child) {
   return getProfileStatus(child).assessmentCardProfile === true;
 }
 
+export function usesPathwayChoiceCard(child: Child) {
+  return child.name === "Ava";
+}
+
 export function usesCompletedAssessmentReport(child: Child) {
   return getProfileStatus(child).completedAssessmentReport === true;
 }

@@ -37,6 +37,7 @@ import {
   isPlanNotStarted,
   isSessionPreviewUnavailable,
   usesAssessmentCard,
+  usesPathwayChoiceCard,
 } from "../lib/childStatus";
 
 const newChildPreviewCards = [
@@ -82,6 +83,7 @@ export default function HomePage({
   const isDiagnostic = isDiagnosticPathway(currentChild);
   const sessionPreviewUnavailable = isSessionPreviewUnavailable(currentChild);
   const showAssessmentCard = usesAssessmentCard(currentChild);
+  const showPathwayChoiceCard = usesPathwayChoiceCard(currentChild);
   const diagnosticCardCopy = getDiagnosticPathwayCardCopy(currentChild);
   const showParentClarity = isParentClarity && !currentChild.isNew && !isMaintenancePlan && !isStartingPlan;
   const newChildHomeCopy = getJourneyHomeCopy(
@@ -295,7 +297,7 @@ export default function HomePage({
             {(currentChild.isNew || showAssessmentCard || currentChild.name === "Nick" || currentChild.name === "Ava") && !["Maya", "Liam"].includes(currentChild.name) ? (
                 <FirstSessionCard
                   className="w-full h-full"
-                  isBooked={sessionPreviewUnavailable ? false : isSessionBooked}
+                  isBooked={sessionPreviewUnavailable || showPathwayChoiceCard ? false : isSessionBooked}
                   isCancelled={sessionPreviewUnavailable ? false : isSessionCancelled}
                   date={firstSessionDate}
                   time={firstSessionTime}
@@ -303,7 +305,9 @@ export default function HomePage({
                   descriptionText={showAssessmentCard || currentChild.name === "Nick" ? diagnosticCardCopy.descriptionText : undefined}
                   buttonText={showAssessmentCard || currentChild.name === "Nick" ? diagnosticCardCopy.buttonText : undefined}
                   onBook={() => {
-                    if (showAssessmentCard || currentChild.name === "Nick") {
+                    if (showPathwayChoiceCard) {
+                      onShowPathway?.(currentChild);
+                    } else if (showAssessmentCard || currentChild.name === "Nick") {
                       onOpenSetup?.(5);
                     } else {
                       onShowPathway?.(currentChild);

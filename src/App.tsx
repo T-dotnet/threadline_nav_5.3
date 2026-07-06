@@ -217,7 +217,7 @@ function AppContent() {
                 <Route path="/understanding" element={<UnderstandingPage onPageChange={handlePageChange} onOpenSetup={openSetup} />} />
                 <Route path="/priorities" element={<PrioritiesPage onPageChange={handlePageChange} />} />
                 <Route path="/roadmap" element={<Navigate to={currentChild.isNew ? "/home" : "/reviews"} replace />} />
-                <Route path="/reviews" element={withPreAssessmentGuard(<ReviewsPage onPageChange={handlePageChange} onOpenSetup={openSetup} />)} />
+                <Route path="/reviews" element={withPreAssessmentGuard(<ReviewsPage onPageChange={handlePageChange} onOpenSetup={openSetup} onShowPathway={handleShowPathway} />)} />
                 <Route path="/resources" element={<ResourcesPage />} />
                 <Route path="/documents" element={<DocumentsPage />} />
                 <Route path="/diary" element={<DiaryPage />} />

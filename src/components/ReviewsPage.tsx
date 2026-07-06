@@ -32,6 +32,7 @@ import {
   isSessionBooked as getIsSessionBooked,
   isSessionPreviewUnavailable,
   usesAssessmentCard,
+  usesPathwayChoiceCard,
   getSessionDate,
 } from "../lib/childStatus";
 import watercolorBgImg from "../assets/images/optimized/watercolor-bg-900.jpg";
@@ -39,15 +40,18 @@ import watercolorBgImg from "../assets/images/optimized/watercolor-bg-900.jpg";
 export default function ReviewsPage({
   onPageChange,
   onOpenSetup,
+  onShowPathway,
 }: {
   onPageChange: (page: Page) => void;
   onOpenSetup?: (step?: 1 | 2 | 3 | 4 | 5 | "welcome") => void;
+  onShowPathway?: (child: any) => void;
 }) {
   const { currentChild } = useCurrentChild();
   const { isParentClarity } = useDisplayMode();
   const isMaintenancePlan = isMaintenancePhase(currentChild);
   const isStartingPlan = isPlanNotStarted(currentChild);
   const showAssessmentCard = usesAssessmentCard(currentChild);
+  const showPathwayChoiceCard = usesPathwayChoiceCard(currentChild);
   const sessionPreviewUnavailable = isSessionPreviewUnavailable(currentChild);
   const diagnosticCardCopy = getDiagnosticPathwayCardCopy(currentChild);
   const showParentClarity = isParentClarity && !currentChild.isNew && !isMaintenancePlan && !isStartingPlan;
@@ -151,16 +155,18 @@ export default function ReviewsPage({
         {(currentChild.isNew || showAssessmentCard || currentChild.name === "Nick" || currentChild.name === "Ava") && !["Maya", "Liam"].includes(currentChild.name) ? (
           <FirstSessionCard
             className="h-full"
-            isBooked={sessionPreviewUnavailable ? false : isSessionBooked}
+            isBooked={sessionPreviewUnavailable || showPathwayChoiceCard ? false : isSessionBooked}
             isCancelled={false}
             date={firstSessionDate}
             time={firstSessionTime}
             titleText={showAssessmentCard || currentChild.name === "Nick" ? diagnosticCardCopy.titleText : undefined}
             descriptionText={showAssessmentCard || currentChild.name === "Nick" ? diagnosticCardCopy.descriptionText : undefined}
             buttonText={showAssessmentCard || currentChild.name === "Nick" ? diagnosticCardCopy.buttonText : undefined}
-            onReschedule={() => onOpenSetup?.(5)}
+            onReschedule={showPathwayChoiceCard ? undefined : () => onOpenSetup?.(5)}
             onBook={() => {
-              if (showAssessmentCard || currentChild.name === "Nick") {
+              if (showPathwayChoiceCard) {
+                onShowPathway?.(currentChild);
+              } else if (showAssessmentCard || currentChild.name === "Nick") {
                 onOpenSetup?.(5);
               }
             }}

@@ -17,6 +17,7 @@ import {
   isPlanNotStarted,
   shouldShowNewChildSetupAction,
   shouldUseFirstSessionCard,
+  usesPathwayChoiceCard,
 } from "../lib/childStatus";
 import { Child, Page } from "../types";
 import { ProgressBar } from "./ui/ProgressBar";
@@ -350,6 +351,7 @@ export default function AllChildrenPage({
           const sessionDate = getSessionDate(child);
           const sessionTime = sessionBooked ? child.intake?.sessionTime || "4:00 pm" : undefined;
           const showFirstSessionCard = shouldUseFirstSessionCard(child);
+          const showPathwayChoiceCard = usesPathwayChoiceCard(child);
           const diagnosticCardCopy = getDiagnosticPathwayCardCopy(child);
 
           return (
@@ -456,8 +458,8 @@ export default function AllChildrenPage({
                         date={sessionDate}
                         time={sessionTime}
                         className="h-full"
-                        isBooked={sessionBooked}
-                        isCancelled={sessionCancelled}
+                        isBooked={showPathwayChoiceCard ? false : sessionBooked}
+                        isCancelled={showPathwayChoiceCard ? false : sessionCancelled}
                         titleText={diagnosticCardCopy.titleText}
                         descriptionText={diagnosticCardCopy.descriptionText}
                         buttonText={diagnosticCardCopy.buttonText}
